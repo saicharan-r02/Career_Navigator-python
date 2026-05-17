@@ -135,7 +135,7 @@ Inference: The model predicts a role (e.g., Data Scientist, Full Stack Developer
 
 ![Core Subject Grade Entry Interface](<Core Subject Grade Entry Interface-fig-2.png>)
 
-![Practical Laboratory Grade Entry Form ](<Screenshot 2026-03-28 013537.png>)
+![Practical Laboratory Grade Entry Form ](<Practical Laboratory Grade Entry Form -fig-3.png>)
 
 ![Additional Laboratory and Workshop Entry](<Screenshot 2026-03-28 013548.png>)
 
