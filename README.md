@@ -145,4 +145,4 @@ Inference: The model predicts a role (e.g., Data Scientist, Full Stack Developer
 
 ![Actionable Phase-Wise Career Guidance Roadmap (Phases 0-2)](<Actionable Phase-Wise Career Guidance Roadmap (Phases 0-2)-fig-7.png>)
 
-![Advanced Roadmap Milestones and PDF Export Interface](<Screenshot 2026-03-28 013640.png>)
+![Advanced Roadmap Milestones and PDF Export Interface](<Advanced Roadmap Milestones and PDF Export Interface-fig-8.png>)
