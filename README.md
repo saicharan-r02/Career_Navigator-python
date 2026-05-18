@@ -143,6 +143,6 @@ Inference: The model predicts a role (e.g., Data Scientist, Full Stack Developer
 
 ![AI-Predicted Career Role and Skill Proficiency Dashboard](<AI-Predicted Career Role and Skill Proficiency Dashboard-fig-6.png>)
 
-![Actionable Phase-Wise Career Guidance Roadmap (Phases 0-2)](<Screenshot 2026-03-28 013632.png>)
+![Actionable Phase-Wise Career Guidance Roadmap (Phases 0-2)](<Actionable Phase-Wise Career Guidance Roadmap (Phases 0-2)-fig-7.png>)
 
 ![Advanced Roadmap Milestones and PDF Export Interface](<Screenshot 2026-03-28 013640.png>)
