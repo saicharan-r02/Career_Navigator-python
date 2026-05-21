@@ -81,7 +81,6 @@ const BRANCH_SYLLABUS = {
 }
 
 function App() {
-  
   const [step, setStep] = useState(1);
   const [branch, setBranch] = useState("CSE AI-ML");
   const [currentYear, setCurrentYear] = useState("4-2"); 
@@ -96,7 +95,6 @@ function App() {
     doc.setFontSize(22);
     doc.setTextColor(79, 172, 254);
     doc.text("CAREER NAVIGATION ROADMAP", pageWidth / 2, 20, { align: "center" });
-
     doc.setFontSize(16);
     doc.setTextColor(0, 255, 136);
     doc.text(`Predicted Role: ${results.prediction}`, pageWidth / 2, 35, { align: "center" });
