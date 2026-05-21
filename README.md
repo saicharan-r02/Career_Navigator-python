@@ -108,7 +108,6 @@ npm install
 npm run dev
 
 
-
 # 🧠 How It Works (The Logic)
 
 
@@ -119,7 +118,6 @@ Feature Engineering: The Backend maps every subject to a specific "Pillar" (e.g.
 Machine Learning: The Random Forest Classifier analyzes the average score of each pillar to identify patterns.
 
 Inference: The model predicts a role (e.g., Data Scientist, Full Stack Developer) based on the highest-weighted skill clusters.
-
 
 
 # <h1>OUTPUT</h1>
