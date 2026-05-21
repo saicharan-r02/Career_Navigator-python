@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 const GradeForm = ({ branch, currentYear, yearMap, syllabusMap, onSubmit }) => {
   const [grades, setGrades] = useState({});
   const [subjects, setSubjects] = useState([]);
-
   useEffect(() => {
     const semestersToLoad = yearMap[currentYear] || [];
     let allSubjects = [];
@@ -15,7 +14,6 @@ const GradeForm = ({ branch, currentYear, yearMap, syllabusMap, onSubmit }) => {
     });
     setSubjects(allSubjects);
   }, [branch, currentYear, yearMap, syllabusMap]);
-
   const handleChange = (subject, value) => {
     setGrades(prev => ({ ...prev, [subject]: value }));
   };
