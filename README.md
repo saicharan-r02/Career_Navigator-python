@@ -84,13 +84,10 @@ Career_Navigator/
 # ⚙️ Installation & Setup
 
 
-
 ## 1. Backend Setup
-
 
 ### Navigate to backend folder
 cd backend
-
 
 ### Install dependencies
 pip install flask flask-cors pandas scikit-learn
