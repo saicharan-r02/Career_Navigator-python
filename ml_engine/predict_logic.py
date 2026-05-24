@@ -174,10 +174,7 @@ def predict_career(user_data):
         avg = sum(pillar_scores[p]) / len(pillar_scores[p]) if pillar_scores[p] else 0
         final_stats[p] = round(avg, 2)
     
-    input_features = [final_stats[p] for p in [
-        'coding', 'math', 'hardware', 'systems', 'theory', 
-        'science', 'design', 'mechanical_core', 'civil_core'
-    ]]
+    input_features = [final_stats[p] for p in ['coding', 'math', 'hardware', 'systems', 'theory', 'science', 'design', 'mechanical_core', 'civil_core']]
     
     prediction = GLOBAL_MODEL.predict([input_features])[0]
     
