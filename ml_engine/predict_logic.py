@@ -175,9 +175,7 @@ def predict_career(user_data):
         final_stats[p] = round(avg, 2)
     
     input_features = [final_stats[p] for p in ['coding', 'math', 'hardware', 'systems', 'theory', 'science', 'design', 'mechanical_core', 'civil_core']]
-    
     prediction = GLOBAL_MODEL.predict([input_features])[0]
-    
     return {
         "prediction": prediction,
         "roadmap": ROADMAPS.get(prediction, ["Focus on core engineering fundamentals", "Build a project portfolio"]),
