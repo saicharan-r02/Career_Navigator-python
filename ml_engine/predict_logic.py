@@ -186,7 +186,7 @@ def predict_career(user_data):
 
 def predict():
     if request.method == 'OPTIONS':
-        return jsonify({"status": "ok"}), 200
+        return jsonify({"status":"ok"}), 200
     
     try:
         user_data = request.json
