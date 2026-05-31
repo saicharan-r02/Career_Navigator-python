@@ -142,22 +142,22 @@ def train_m():
     }
    d = pd.DataFrame(data)
    model = RandomForestClassifier(n_estimators=500, random_state=42)
-   model.fit(d.drop('target', axis=1), d['target'])
+   model.fit(d.drop('target', axis=1),d['target'])
    return model
 
 GLOBAL_MODEL = train_m()
 def predict_career(user_data):
-    grades = user_data.get('grades', {})
+    grades = user_data.get('grades',{})
     pillar_scores = {k: [] for k in PILLARS}
 
     if not grades:
-        return {"error": "No grades provided"}
+        return {"error":"No grades provided"}
 
     for sub, grade in grades.items():
         sub_lower = sub.lower()
-        grade_val = int(grade) if str(grade).isdigit() else G_P.get(str(grade), 0)
+        grade_val = int(grade) if str(grade).isdigit() else G_P.get(str(grade),0)
         
-        score = grade_val * 10 
+        score = grade_val*10 
         
         found = False
         for p_key, keywords in PILLARS.items():
