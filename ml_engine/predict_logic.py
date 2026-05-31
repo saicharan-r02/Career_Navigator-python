@@ -142,16 +142,16 @@ def train_m():
     }
    d = pd.DataFrame(data)
    model = RandomForestClassifier(n_estimators=500, random_state=42)
-   model.fit(d.drop('target', axis=1), d['target'])
+   model.fit(d.drop('target', axis=1),d['target'])
    return model
 
 GLOBAL_MODEL = train_m()
 def predict_career(user_data):
-    grades = user_data.get('grades', {})
+    grades = user_data.get('grades',{})
     pillar_scores = {k: [] for k in PILLARS}
 
     if not grades:
-        return {"error": "No grades provided"}
+        return {"error":"No grades provided"}
 
     for sub, grade in grades.items():
         sub_lower = sub.lower()
@@ -186,7 +186,7 @@ def predict_career(user_data):
 
 def predict():
     if request.method == 'OPTIONS':
-        return jsonify({"status": "ok"}), 200
+        return jsonify({"status":"ok"}), 200
     
     try:
         user_data = request.json
