@@ -1,3 +1,4 @@
+
 # Root and Subfolder Dependencies
 node_modules/
 **/node_modules/
@@ -19,6 +20,7 @@ env/
 .env.local
 .DS_Store
 Thumbs.db
+
 
 # Logs
 npm-debug.log*
