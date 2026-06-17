@@ -14,13 +14,11 @@ env/
 # React Production Builds
 /Frontend/build/
 /Backend/dist/
-
 # Environment & OS Misc
 .env
 .env.local
 .DS_Store
 Thumbs.db
-
 
 # Logs
 npm-debug.log*
