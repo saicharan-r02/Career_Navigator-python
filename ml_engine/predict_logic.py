@@ -9,15 +9,15 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 G_P = {'O': 10, 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C': 5, 'P': 4, 'F': 0}
 
 PILLARS = {
-    'coding': ['programming', 'java', 'python', 'data structures', 'node', 'react', 'django', 'prolog', 'lisp', 'pyswip', 'problem solving', 'lab', 'software', 'flutter', 'ui design', 'algorithms'],
-    'math': ['calculus', 'matrices', 'differential', 'statistical', 'discrete', 'mathematics', 'probability', 'numerical', 'complex variables', 'stochastic', 'foundations', 'analysis'],
-    'hardware': ['electrical', 'electronics', 'devices', 'circuits', 'logic design', 'microprocessor', 'analog', 'signals', 'electromagnetic', 'transmission', 'communication', 'ic applications', 'microcontrollers', 'iot', 'antennas', 'vlsi', 'microwave', 'embedded'],
-    'systems': ['database', 'dbms', 'operating systems', 'visualization', 'r programming', 'power bi', 'sql', 'organization', 'architecture', 'network analysis', 'simulation', 'networks', 'cryptography', 'security', 'compiler', 'big data', 'cloud', 'spark', 'information security'],
-    'theory': ['economics', 'befa', 'english', 'sensitization', 'constitution', 'ethics', 'management', 'gender', 'skill enhancement', 'induction', 'societal', 'rights', 'intellectual property', 'professional practice'],
-    'science': ['chemistry', 'physics', 'environmental', 'geology', 'biology'],
-    'design': ['graphics', 'workshop', 'cad', 'cam', 'drawing', 'metrology', 'modelling'],
-    'mechanical_core': ['thermodynamics', 'mechanics', 'metallurgy', 'production', 'thermal', 'kinematics', 'machine members', 'heat transfer', 'refrigeration', 'dynamics'],
-    'civil_core': ['surveying', 'concrete', 'structural', 'geotechnical', 'transportation', 'hydrology', 'foundation']
+    'coding':['programming','java','python','data structures','node','react','django','prolog','lisp','pyswip','problem solving','lab','software','flutter','ui design','algorithms'],
+    'math': ['calculus','matrices','differential','statistical','discrete','mathematics','probability','numerical','complex variables','stochastic','foundations','analysis'],
+    'hardware':['electrical','electronics','devices','circuits','logic design','microprocessor','analog','signals','electromagnetic','transmission','communication','ic applications','microcontrollers','iot','antennas','vlsi','microwave','embedded'],
+    'systems':['database', 'dbms', 'operating systems','visualization','r programming','power bi', 'sql', 'organization', 'architecture', 'network analysis', 'simulation', 'networks','cryptography','security','compiler','big data','cloud','spark','information security'],
+    'theory':['economics','befa','english','sensitization','constitution','ethics','management','gender','skill enhancement','induction','societal','rights','intellectual property','professional practice'],
+    'science':['chemistry','physics','environmental','geology','biology'],
+    'design':['graphics','workshop','cad','cam','drawing','metrology','modelling'],
+    'mechanical_core':['thermodynamics','mechanics','metallurgy','production','thermal','kinematics','machine members','heat transfer','refrigeration','dynamics'],
+    'civil_core':['surveying','concrete','structural','geotechnical','transportation','hydrology','foundation']
 }
 
 ROADMAPS = {
