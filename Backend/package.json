@@ -1,36 +1,36 @@
 {
-  "name": "career-navigator-frontend",
-  "version": "1.0.0",
-  "description": "Career Navigator Frontend Interface",
-  "private": true,
-  "dependencies": {
-    "axios": "^1.6.0",
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "lucide-react": "^0.284.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+  "name":"career-navigator-frontend",
+  "version":"1.0.0",
+  "description":"Career Navigator Frontend Interface",
+  "private":true,
+  "dependencies":{
+    "axios":"^1.6.0",
+    "cors":"^2.8.6",
+    "express":"^5.2.1",
+    "lucide-react":"^0.284.0",
+    "react":"^18.2.0",
+    "react-dom":"^18.2.0",
+    "react-scripts":"5.0.1",
+    "web-vitals":"^2.1.4"
   },
-  "scripts": {
-  "start": "concurrently \"npm run ai\" \"npm run frontend\"",
-  "ai": "cd ml_engine && python predict_logic.py",
-  "frontend": "cd Frontend && npm start"
+  "scripts":{
+  "start":"concurrently \"npm run ai\" \"npm run frontend\"",
+  "ai":"cd ml_engine && python predict_logic.py",
+  "frontend":"cd Frontend && npm start"
 },
-  "eslintConfig": {
-    "extends": [
+  "eslintConfig":{
+    "extends":[
       "react-app",
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
+  "browserslist":{
+    "production":[
       ">0.2%",
       "not dead",
       "not op_mini all"
     ],
-    "development": [
+    "development":[
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
