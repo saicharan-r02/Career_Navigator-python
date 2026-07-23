@@ -1,13 +1,10 @@
-
 # 🧭 Career Navigator
 
 Career Navigator is an AI-powered academic analytics platform designed to help engineering students bridge the gap between university grades and professional career paths. By analyzing semester-wise performance through a Random Forest Classifier, the system predicts the most suitable career role and generates a customized, phase-wise roadmap for placement preparation.
 
-
 # 🎯 Problem Statement
 
 Engineering students often struggle to translate their academic performance into clear career direction and actionable preparation strategies. Existing guidance systems are generic and do not leverage individual academic data to provide personalized recommendations. This project addresses the problem by building a machine learning–driven platform that analyzes semester-wise performance and predicts suitable career roles, along with a structured, phase-wise roadmap for targeted skill development.
-
 
 # 🚀 Key Features
 
@@ -20,7 +17,6 @@ Skill Proficiency Dashboard: Visualizes strengths in areas like Coding, Systems,
 Actionable Roadmaps: Generates a structured 4-phase plan for the predicted role.
 
 PDF Export: Students can download their personalized career guide for offline use.
-
 
 
 # 🛠️ Tech Stack
@@ -46,9 +42,7 @@ Pandas & NumPy (Data Processing)
 Flask-CORS (Cross-Origin Resource Sharing)
 
 
-
 # 📁 Project Structure
-
 
 ```
 Career_Navigator/
@@ -80,9 +74,7 @@ Career_Navigator/
 └── README.md
 ```
 
-
 # ⚙️ Installation & Setup
-
 
 ## 1. Backend Setup
 
@@ -110,7 +102,6 @@ npm run dev
 
 # 🧠 How It Works (The Logic)
 
-
 Data Ingestion: The user selects their branch and inputs grades for completed semesters.
 
 Feature Engineering: The Backend maps every subject to a specific "Pillar" (e.g., Operating Systems → Systems).
@@ -123,17 +114,10 @@ Inference: The model predicts a role (e.g., Data Scientist, Full Stack Developer
 # <h1>OUTPUT</h1>
 
 ![Specialization and Semester Selection Interface](<Specialization and Semester Selection Interface-fig-1.png>)
-
 ![Core Subject Grade Entry Interface](<Core Subject Grade Entry Interface-fig-2.png>)
-
 ![Practical Laboratory Grade Entry Form ](<Practical Laboratory Grade Entry Form -fig-3.png>)
-
 ![Additional Laboratory and Workshop Entry](<Additional Laboratory and Workshop Entry-fig-4.png>)
-
 ![Final Transcript Submission and API Trigger ](<Final Transcript Submission and API Trigger -fig-5.png>)
-
 ![AI-Predicted Career Role and Skill Proficiency Dashboard](<AI-Predicted Career Role and Skill Proficiency Dashboard-fig-6.png>)
-
 ![Actionable Phase-Wise Career Guidance Roadmap (Phases 0-2)](<Actionable Phase-Wise Career Guidance Roadmap (Phases 0-2)-fig-7.png>)
-
 ![Advanced Roadmap Milestones and PDF Export Interface](<Advanced Roadmap Milestones and PDF Export Interface-fig-8.png>)
