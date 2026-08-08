@@ -1,4 +1,3 @@
-
 # Root and Subfolder Dependencies
 node_modules/
 **/node_modules/
@@ -14,6 +13,7 @@ env/
 # React Production Builds
 /Frontend/build/
 /Backend/dist/
+
 # Environment & OS Misc
 .env
 .env.local
