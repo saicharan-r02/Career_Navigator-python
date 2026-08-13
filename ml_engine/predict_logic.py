@@ -3,12 +3,12 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from sklearn.ensemble import RandomForestClassifier
 
-app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+app=Flask(__name__)
+CORS(app,resources={r"/*":{"origins":"*"}})
 
-G_P = {'O': 10, 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C': 5, 'P': 4, 'F': 0}
+G_P={'O': 10,'A+': 9,'A':8, 'B+':7, 'B': 6, 'C': 5, 'P': 4, 'F': 0}
 
-PILLARS = {
+PILLARS={
     'coding':['programming','java','python','data structures','node','react','django','prolog','lisp','pyswip','problem solving','lab','software','flutter','ui design','algorithms'],
     'math': ['calculus','matrices','differential','statistical','discrete','mathematics','probability','numerical','complex variables','stochastic','foundations','analysis'],
     'hardware':['electrical','electronics','devices','circuits','logic design','microprocessor','analog','signals','electromagnetic','transmission','communication','ic applications','microcontrollers','iot','antennas','vlsi','microwave','embedded'],
@@ -140,64 +140,62 @@ def train_m():
         'Data Scientist & Analytics Lead'         # Math + Systems
         ]
     }
-   d = pd.DataFrame(data)
-   model = RandomForestClassifier(n_estimators=500, random_state=42)
-   model.fit(d.drop('target', axis=1),d['target'])
+   d=pd.DataFrame(data)
+   model=RandomForestClassifier(n_estimators=500,random_state=42)
+   model.fit(d.drop('target',axis=1),d['target'])
    return model
 
-GLOBAL_MODEL = train_m()
+GLOBAL_MODEL=train_m()
 def predict_career(user_data):
-    grades = user_data.get('grades',{})
-    pillar_scores = {k: [] for k in PILLARS}
+    grades=user_data.get('grades',{})
+    pillar_scores={k:[] for k in PILLARS}
 
     if not grades:
         return {"error":"No grades provided"}
 
     for sub, grade in grades.items():
-        sub_lower = sub.lower()
-        grade_val = int(grade) if str(grade).isdigit() else G_P.get(str(grade),0)
-        
-        score = grade_val*10 
-        
-        found = False
-        for p_key, keywords in PILLARS.items():
+        sub_lower=sub.lower()
+        grade_val=int(grade) if str(grade).isdigit() else G_P.get(str(grade),0)
+        score=grade_val*10 
+        found=False
+        for p_key,keywords in PILLARS.items():
             if any(k in sub_lower for k in keywords):
                 pillar_scores[p_key].append(score)
-                found = True
+                found=True
                 break
         
         if not found:
             pillar_scores['theory'].append(score)
 
-    final_stats = {}
+    final_stats={}
     for p in PILLARS.keys():
-        avg = sum(pillar_scores[p]) / len(pillar_scores[p]) if pillar_scores[p] else 0
-        final_stats[p] = round(avg, 2)
+        avg=sum(pillar_scores[p])/len(pillar_scores[p]) if pillar_scores[p] else 0
+        final_stats[p]=round(avg,2)
     
-    input_features = [final_stats[p] for p in ['coding', 'math', 'hardware', 'systems', 'theory', 'science', 'design', 'mechanical_core', 'civil_core']]
-    prediction = GLOBAL_MODEL.predict([input_features])[0]
+    input_features=[final_stats[p] for p in ['coding', 'math', 'hardware', 'systems', 'theory', 'science', 'design', 'mechanical_core', 'civil_core']]
+    prediction=GLOBAL_MODEL.predict([input_features])[0]
     return {
-        "prediction": prediction,
-        "roadmap": ROADMAPS.get(prediction, ["Focus on core engineering fundamentals", "Build a project portfolio"]),
-        "pillar_stats": final_stats 
+        "prediction":prediction,
+        "roadmap":ROADMAPS.get(prediction,["Focus on core engineering fundamentals","Build a project portfolio"]),
+        "pillar_stats":final_stats 
     }
 
-@app.route('/predict', methods=['POST', 'OPTIONS'])
+@app.route('/predict',methods=['POST','OPTIONS'])
 
 def predict():
-    if request.method == 'OPTIONS':
+    if request.method=='OPTIONS':
         return jsonify({"status":"ok"}), 200
     
     try:
-        user_data = request.json
-        print(f"Analyzing data for: {user_data.get('branch')}")
-        result = predict_career(user_data)
+        user_data=request.json
+        print(f"Analyzing data for:{user_data.get('branch')}")
+        result=predict_career(user_data)
         return jsonify(result)
     
     except Exception as e:
-        print(f"Error: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        print(f"Error:{str(e)}")
+        return jsonify({"error":str(e)}),500
 
-if __name__ == '__main__':
+if __name__=='__main__':
     print("AI ML Engine Online on Port 5000")
-    app.run(host='127.0.0.1', port=5000, debug=False)
+    app.run(host='127.0.0.1',port=5000,debug=False)
