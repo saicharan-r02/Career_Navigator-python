@@ -20,7 +20,7 @@ PILLARS={
     'civil_core':['surveying','concrete','structural','geotechnical','transportation','hydrology','foundation']
 }
 
-ROADMAPS = {
+ROADMAPS={
     'Full Stack Web Engineer (MERN/Next.js)':[
         "Phase 0: Web Fundamentals & Version Control\n    - HTTP/HTTPS protocols, DNS, and how browsers render HTML/CSS\n    - Git Mastery: Branching, Merging, Rebasing, and GitHub Actions basics\n    - Milestone: Static Web – Deploy a multi-page site using only HTML/CSS and Netlify",
         "Phase 1: Advanced Frontend Mastery\n    - JavaScript ES6+ (Promises, Async/Await, Closures, DOM manipulation)\n    - CSS Architectures: Tailwind CSS, SASS, and Responsive Design (Flex/Grid)\n    - Milestone: Interactive UI – Build a Dynamic Task Dashboard with local storage",
@@ -112,7 +112,7 @@ ROADMAPS = {
 }
 
 def train_m():
-   data = {
+   data={
     'coding':          [95, 85, 40, 30, 60, 50, 80, 20, 15, 10, 90, 45, 30, 95],
     'math':            [90, 80, 50, 40, 95, 60, 60, 75, 85, 70, 60, 50, 40, 95],
     'hardware':        [20, 30, 95, 85, 40, 30, 30, 20, 10, 10, 25, 90, 40, 20],
@@ -123,7 +123,7 @@ def train_m():
     'mechanical_core': [10, 10, 30, 10, 10, 10, 10, 95, 10, 10, 10, 20, 10, 10],
     'civil_core':      [10, 10, 10, 10, 10, 10, 10, 10, 95, 90, 10, 10, 10, 10],
     
-    'target': [
+    'target':[
         'Generative AI & LLM Engineer',           # High Coding + Math
         'Generative AI & LLM Engineer',           # Variation
         'IoT & Robotics Systems Architect',       # High Hardware
@@ -172,7 +172,7 @@ def predict_career(user_data):
         avg=sum(pillar_scores[p])/len(pillar_scores[p]) if pillar_scores[p] else 0
         final_stats[p]=round(avg,2)
     
-    input_features=[final_stats[p] for p in ['coding', 'math', 'hardware', 'systems', 'theory', 'science', 'design', 'mechanical_core', 'civil_core']]
+    input_features=[final_stats[p] for p in ['coding','math','hardware','systems','theory','science','design','mechanical_core','civil_core']]
     prediction=GLOBAL_MODEL.predict([input_features])[0]
     return {
         "prediction":prediction,
