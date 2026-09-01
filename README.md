@@ -1,48 +1,50 @@
-# 🧭 Career Navigator
+# 🧭 Career Navigator — AI Academic Analytics & Guidance SaaS
 
-Career Navigator is an AI-powered academic analytics platform designed to help engineering students bridge the gap between university grades and professional career paths. By analyzing semester-wise performance through a Random Forest Classifier, the system predicts the most suitable career role and generates a customized, phase-wise roadmap for placement preparation.
+Career Navigator is an AI-powered academic analytics and career roadmap platform designed to help engineering students bridge the gap between university grades and professional career paths. By analyzing semester-wise performance through a Random Forest Classifier, the system predicts the most suitable career role, saves student progress in a persistent SQLite database, and generates an interactive, phase-wise roadmap for placement preparation.
 
-# 🎯 Problem Statement
+---
 
-Engineering students often struggle to translate their academic performance into clear career direction and actionable preparation strategies. Existing guidance systems are generic and do not leverage individual academic data to provide personalized recommendations. This project addresses the problem by building a machine learning–driven platform that analyzes semester-wise performance and predicts suitable career roles, along with a structured, phase-wise roadmap for targeted skill development.
+## 🎯 Problem Statement
 
-# 🚀 Key Features
+Engineering students often struggle to translate their academic performance into clear career direction and actionable preparation strategies. Existing guidance systems are generic and do not leverage individual academic data or save multi-semester preparation milestones. 
 
-Dynamic Grade Entry: Interactive UI that adapts to different engineering branches (CSE, AI-ML, etc.) and academic years.
+This platform solves this by:
+1. Analyzing semester-wise performance across 50+ engineering subjects mapped to 9 core Technical Pillars.
+2. Predicting tailored career roles (e.g. *Generative AI Engineer, Full Stack Web Engineer, DevOps & Platform Engineer, Data Scientist*).
+3. Persisting student profiles, assessment history, and interactive phase-by-phase roadmap task checklists in a database.
 
-AI-Driven Prediction: Uses Machine Learning to map 50+ subjects into 9 core "Technical Pillars."
+---
 
-Skill Proficiency Dashboard: Visualizes strengths in areas like Coding, Systems, Math, and Hardware.
+## 🚀 Key Features
 
-Actionable Roadmaps: Generates a structured 4-phase plan for the predicted role.
+- 🎓 **Dynamic Grade Entry**: Interactive UI that adapts to different engineering branches (CSE, AI-ML, ECE, Mechanical, Civil) and academic years.
+- 🧠 **AI-Driven Role Prediction**: Evaluates 50+ subjects and clusters them into 9 core "Technical Pillars" using a tuned Random Forest Classifier.
+- 🗄️ **Persistent Database Layer (SQLite / SQLAlchemy)**: Automatically saves student profiles, past assessments, and customizable roadmap task checklists.
+- 📊 **Skill Proficiency Dashboard**: Visualizes student strengths in Coding, Systems, Math, Hardware, Theory, Science, Design, Mechanical Core, and Civil Core.
+- ✅ **Actionable Interactive Roadmaps**: Generates 6 structured preparation phases (Phases 0–5) with toggleable milestone progress tracking.
+- 📄 **PDF Export**: Students can download their personalized career guide for offline use.
+- 📈 **Institutional Analytics API**: Provides platform-wide trends on student career trajectories and milestone completion rates.
 
-PDF Export: Students can download their personalized career guide for offline use.
+---
 
+## 🛠️ Tech Stack
 
-# 🛠️ Tech Stack
+### Frontend:
+* **React.js** (Functional Components & Hooks)
+* **Axios** (REST API Communication)
+* **jsPDF** (Automated PDF Document Generation)
+* **Vanilla CSS3** (Modern Dark-Themed Glassmorphism UI)
 
-## Frontend:
+### Backend & Machine Learning:
+* **Python 3 & Flask** (REST API Server)
+* **SQLite / SQLCipher & SQLAlchemy 2.0** (`career_navigator.db`)
+* **Scikit-Learn** (Random Forest Classifier)
+* **Pandas & NumPy** (Data Processing & Vector Aggregation)
+* **Flask-CORS** (Cross-Origin Resource Sharing)
 
-React.js (Functional Components & Hooks)
+---
 
-Axios (API Communication)
-
-jsPDF (Document Generation)
-
-CSS3 (Modern Dark-themed UI)
-
-## Backend:
-
-Python (Flask)
-
-Scikit-Learn (Random Forest Model)
-
-Pandas & NumPy (Data Processing)
-
-Flask-CORS (Cross-Origin Resource Sharing)
-
-
-# 📁 Project Structure
+## 📁 Project Structure
 
 ```
 Career_Navigator/
@@ -65,53 +67,117 @@ Career_Navigator/
 │   └── package-lock.json
 │
 ├── ml_engine/
-│   ├── predict_logic.py
+│   ├── database.py             # SQLAlchemy ORM models & student queries
+│   ├── predict_logic.py        # Flask ML inference & roadmap API server
+│   ├── career_navigator.db     # SQLite database (auto-generated on startup)
 │   ├── model/
-│   │   └── career_model.pkl
-│   └── requirements.txt
+│   │   └── career_model.pkl    # Serialized ML model
+│   └── requirements.txt        # Python dependencies (Flask, SQLAlchemy, Scikit-Learn)
 │
 ├── .gitignore
 └── README.md
 ```
 
-# ⚙️ Installation & Setup
+---
 
-## 1. Backend Setup
+## 🗃️ Database Schema & Inspection
 
-### Navigate to backend folder
-cd backend
+The system stores persistent student information in [`career_navigator.db`](file:///c:/Users/saich/OneDrive/Desktop/python/Career_Navigator/ml_engine/career_navigator.db):
 
-### Install dependencies
-pip install flask flask-cors pandas scikit-learn
+### Tables:
+1. `students`: Stores student metadata (`email`, `full_name`, `branch`, `academic_year`).
+2. `career_assessments`: Stores the predicted role, 9-pillar proficiency scores, and entered grades snapshot.
+3. `roadmap_milestones`: Stores 6-phase preparation tasks with checklist completion flags (`is_completed`, `completed_at`).
 
+### How to Inspect Stored Data:
+Run this Python snippet in your terminal:
+```bash
+python -c "
+import sqlite3, pandas as pd
+conn = sqlite3.connect('ml_engine/career_navigator.db')
+print('=== REGISTERED STUDENTS ===')
+print(pd.read_sql_query('SELECT * FROM students;', conn))
+print('\n=== CAREER ASSESSMENTS ===')
+print(pd.read_sql_query('SELECT id, student_id, predicted_role, created_at FROM career_assessments;', conn))
+print('\n=== ROADMAP TASKS CHECKLIST ===')
+print(pd.read_sql_query('SELECT id, phase_index, phase_title, is_completed FROM roadmap_milestones LIMIT 6;', conn))
+"
+```
+Or open `ml_engine/career_navigator.db` in **DB Browser for SQLite** or **VS Code SQLite Viewer**.
 
-### Run the Flask server
+---
+
+## 📡 REST API Documentation
+
+### 1. `POST /predict` — Predict Career Role & Save Roadmap
+* **Request Body**:
+```json
+{
+  "email": "alex@university.edu",
+  "full_name": "Alex Chen",
+  "branch": "CSE",
+  "academic_year": "3rd Year",
+  "grades": {
+    "Programming in C": "O",
+    "Data Structures": "A+",
+    "Operating Systems": "A"
+  }
+}
+```
+* **Response**:
+```json
+{
+  "assessment_id": 1,
+  "email": "alex@university.edu",
+  "prediction": "Full Stack Web Engineer (MERN/Next.js)",
+  "pillar_stats": {
+    "coding": 95.0,
+    "math": 80.0,
+    "systems": 85.0
+  },
+  "roadmap": [
+    "Phase 0: Web Fundamentals & Version Control...",
+    "Phase 1: Advanced Frontend Mastery..."
+  ]
+}
+```
+
+### 2. `GET /api/student/history?email=alex@university.edu`
+Fetches a student's past career evaluations and milestone task checklist statuses across sessions.
+
+### 3. `POST /api/student/milestone/toggle`
+* **Request Body**:
+```json
+{
+  "milestone_id": 1,
+  "is_completed": true
+}
+```
+
+### 4. `GET /api/analytics`
+Returns aggregate career trends across all students (most predicted roles, branch statistics, overall milestone completion rate).
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1. ML Engine & Backend Setup
+```bash
+cd ml_engine
+pip install -r requirements.txt
 python predict_logic.py
+```
 
-## 2. Frontend Setup
-
-### Navigate to frontend folder
-cd frontend
-
-### Install dependencies
+### 2. Frontend Setup
+```bash
+cd ../frontend
 npm install
-
-### Start the React development server
 npm run dev
+```
 
+---
 
-# 🧠 How It Works (The Logic)
-
-Data Ingestion: The user selects their branch and inputs grades for completed semesters.
-
-Feature Engineering: The Backend maps every subject to a specific "Pillar" (e.g., Operating Systems → Systems).
-
-Machine Learning: The Random Forest Classifier analyzes the average score of each pillar to identify patterns.
-
-Inference: The model predicts a role (e.g., Data Scientist, Full Stack Developer) based on the highest-weighted skill clusters.
-
-
-# <h1>OUTPUT</h1>
+## 🖼️ Interface Screenshots
 
 ![Specialization and Semester Selection Interface](<Specialization and Semester Selection Interface-fig-1.png>)
 ![Core Subject Grade Entry Interface](<Core Subject Grade Entry Interface-fig-2.png>)
@@ -121,3 +187,9 @@ Inference: The model predicts a role (e.g., Data Scientist, Full Stack Developer
 ![AI-Predicted Career Role and Skill Proficiency Dashboard](<AI-Predicted Career Role and Skill Proficiency Dashboard-fig-6.png>)
 ![Actionable Phase-Wise Career Guidance Roadmap (Phases 0-2)](<Actionable Phase-Wise Career Guidance Roadmap (Phases 0-2)-fig-7.png>)
 ![Advanced Roadmap Milestones and PDF Export Interface](<Advanced Roadmap Milestones and PDF Export Interface-fig-8.png>)
+
+---
+
+## 👨‍💻 Author
+
+Developed by **Sai Charan** — AI & EdTech Systems Engineering.
