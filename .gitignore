@@ -3,9 +3,12 @@ node_modules/
 **/node_modules/
 package-lock.json
 
-# Python / ML Engine Caches
+# Python / ML Engine Caches & Databases
 __pycache__/
 *.pyc
+*.db
+*.sqlite
+*.sqlite3
 .ipynb_checkpoints/
 venv/
 env/
