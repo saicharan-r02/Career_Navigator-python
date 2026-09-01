@@ -1,10 +1,24 @@
+import os
+import sys
 import pandas as pd
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from sklearn.ensemble import RandomForestClassifier
 
+# Database Integration
+from database import (
+    init_db,
+    save_student_assessment,
+    get_student_profile_and_history,
+    toggle_roadmap_milestone,
+    get_platform_analytics
+)
+
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
+
+# Initialize SQLite database
+init_db()
 
 G_P = {'O': 10, 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C': 5, 'P': 4, 'F': 0}
 
@@ -183,20 +197,98 @@ def predict_career(user_data):
     }
 
 @app.route('/predict', methods=['POST', 'OPTIONS'])
-
 def predict():
     if request.method == 'OPTIONS':
         return jsonify({"status":"ok"}), 200
     
     try:
-        user_data = request.json
+        user_data = request.json or {}
         print(f"Analyzing data for: {user_data.get('branch')}")
         result = predict_career(user_data)
+
+        if "error" in result:
+            return jsonify(result), 400
+
+        # Extract student identifier or fallback
+        email = user_data.get("email") or f"student_{int(pd.Timestamp.now().timestamp())}@campus.edu"
+        full_name = user_data.get("full_name") or user_data.get("name") or "Student"
+        branch = user_data.get("branch") or "Engineering"
+        academic_year = user_data.get("academic_year") or user_data.get("year") or "3rd Year"
+
+        # Persist to database
+        assessment_id = None
+        try:
+            assessment_id = save_student_assessment(
+                email=email,
+                full_name=full_name,
+                branch=branch,
+                academic_year=academic_year,
+                grades=user_data.get("grades", {}),
+                predicted_role=result["prediction"],
+                pillar_stats=result["pillar_stats"],
+                roadmap=result["roadmap"]
+            )
+            result["assessment_id"] = assessment_id
+            result["email"] = email
+        except Exception as db_err:
+            print(f"[WARN] Database persistence failed: {db_err}")
+
         return jsonify(result)
     
     except Exception as e:
         print(f"Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/student/history', methods=['GET'])
+def get_history():
+    """Fetches past career assessments and roadmap milestone progress for a student."""
+    try:
+        email = request.args.get("email")
+        if not email:
+            return jsonify({"status": "error", "error": "email parameter is required"}), 400
+
+        profile = get_student_profile_and_history(email)
+        if not profile:
+            return jsonify({"status": "error", "error": "Student not found"}), 404
+
+        return jsonify({"status": "success", "data": profile})
+    except Exception as e:
+        return jsonify({"status": "error", "error": str(e)}), 500
+
+
+@app.route('/api/student/milestone/toggle', methods=['POST'])
+def toggle_milestone():
+    """Toggles checklist status for a roadmap milestone."""
+    try:
+        payload = request.get_json(force=True)
+        milestone_id = payload.get("milestone_id")
+        is_completed = payload.get("is_completed", True)
+
+        if not milestone_id:
+            return jsonify({"status": "error", "error": "milestone_id is required"}), 400
+
+        success = toggle_roadmap_milestone(int(milestone_id), bool(is_completed))
+        if success:
+            return jsonify({
+                "status": "success",
+                "message": f"Milestone {milestone_id} marked as {'completed' if is_completed else 'pending'}"
+            })
+        else:
+            return jsonify({"status": "error", "error": "Milestone not found"}), 404
+    except Exception as e:
+        return jsonify({"status": "error", "error": str(e)}), 500
+
+
+@app.route('/api/analytics', methods=['GET'])
+def get_analytics():
+    """Returns platform-wide career analytics and trending specializations."""
+    try:
+        analytics = get_platform_analytics()
+        return jsonify({"status": "success", "data": analytics})
+    except Exception as e:
+        return jsonify({"status": "error", "error": str(e)}), 500
+
 
 if __name__ == '__main__':
     print("AI ML Engine Online on Port 5000")
